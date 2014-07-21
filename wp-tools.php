@@ -1,5 +1,5 @@
 <?php
-function createFormField($label, $name, $value, $type, $options=null)
+function createFormField($label, $name, $value, $type, $options=array())
 {
 	$output = '';
 	$field = '';
@@ -24,6 +24,19 @@ function createFormField($label, $name, $value, $type, $options=null)
 		break;
 		case 'image':
 			$field = createImageUpload($label, $name, $value, $options);
+		break;
+		case 'color':
+			if (isset ($options['class']))
+			{
+				$options['class'] .= " color-picker-field";
+			}
+			else
+			{
+				$options['class'] = "color-picker-field";
+			}
+
+			
+			$field = createInput($label, $value, $type, $options);
 		break;
 	}
 
@@ -58,7 +71,7 @@ function merge_options($pairs, $atts) {
 function createInput($label, $value, $type="text", $options = null)
 {
 	extract( merge_options(
-		array("class" => "", "placeholder" => "", "note" => ""), $options)
+		array("class" => "", "placeholder" => "", "note" => "", "updateRegion" => false), $options)
 	);
 
 	$output = sprintf('<input type="%s" id="%s" class="%s" name="%s" value="%s" placeholder="%s" />', $type,
@@ -69,6 +82,10 @@ function createInput($label, $value, $type="text", $options = null)
 		 $placeholder
 	);
 	
+	if ($updateRegion == true) {
+		$output .= sprintf('<div class="mmm-update-region"><label class="control-label"><i class="icon-level-up icon-rotate-90"></i> Field Value</label><div class="controls"><div id="%s-update" class="mmm-update-content">%s</div></div></div>', $label, $value);
+	}
+
 	if (isset($note)) {
 		$output .= sprintf('<p class="help-block">%s</p>', $note);
 	}
