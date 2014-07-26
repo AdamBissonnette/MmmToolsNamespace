@@ -47,6 +47,9 @@ function mmm_customize_preview() {
                     case "color":
                         $custom_js = gen_customize_js($setting["id"], $setting["hooks"]);
                         break;
+                    default:
+                        $custom_js = gen_customize_js($setting["id"], $setting["hooks"]);
+                        break;
                 }
 
                 $customizeJS .= $custom_js;
@@ -83,7 +86,9 @@ function mmm_customize_css()
         }
     }
 
-    ?><style type="text/css"><?php echo $customizeCSS; ?>}</style>
+    ?><style type="text/css">
+    <?php echo $customizeCSS; ?>
+    </style>
     <?php
 }
 
@@ -143,13 +148,12 @@ function add_color_setting(WP_Customize_Manager $wp_customize, $section_id, $set
         $setting_id,
         array(
             'default' => $default_value,
-            'sanitize_callback' => 'sanitize_hex_color',
+            //'sanitize_callback' => 'sanitize_hex_color',
             'transport' => 'postMessage'
         )
     );
 
-    $wp_customize->add_control(
-        new WP_Customize_Color_Control(
+    $control = new Mmm_Color_Control(
             $wp_customize,
             $setting_id,
             array(
@@ -157,8 +161,12 @@ function add_color_setting(WP_Customize_Manager $wp_customize, $section_id, $set
                 'section' => $section_id,
                 'settings' => $setting_id,
             )
-        )
-    );
+        );
+
+    $control->mid = $setting_id;
+
+    //add_alpha_tab($control);
+    $wp_customize->add_control($control);
 }
 
 function add_image_setting(WP_Customize_Manager $wp_customize, $section_id, $setting_id, $label, $default_value="")
@@ -264,8 +272,31 @@ function gen_customize_css($customizeKey, $arrClassStyle, $value_wrapper = "%s")
 }
  
 function admin_scripts() {
+    wp_enqueue_style('admin', get_template_directory_uri() . '/assets/admin/css/mmm_roots_admin.css', false, null);
+    wp_enqueue_style('select2', get_template_directory_uri() . '/assets/admin/css/select2.css', false, null);
+    wp_enqueue_style('font-awesome', get_template_directory_uri() . '/assets/admin/css/font-awesome.css', false, null);
+    wp_enqueue_style( 'wp-color-picker' );
     wp_enqueue_media();
-    wp_enqueue_script('shiba-media-manager', get_template_directory_uri().'/assets/admin/js/mmm-media-manager.js', array( ), '1.0', true);
+    wp_enqueue_script( 'wp-color-picker');
+    wp_enqueue_script('select2', get_template_directory_uri() . '/assets/js/vendor/select2.js', false, null);
+    wp_enqueue_script('select2-sortable', get_template_directory_uri() . '/assets/js/vendor/select2.sortable.js', false, null);
+    wp_enqueue_script('admin', get_template_directory_uri() . '/assets/admin/js/mmm_roots_admin.js', false, null);
+
+}
+
+require_once( ABSPATH . WPINC . '/class-wp-customize-control.php' );
+
+class Mmm_Color_Control extends WP_Customize_Control {
+    public $type = 'text';
+
+    public function render_content() {
+        ob_start(); //Since there isn't a nice way to get this link content we have to use the output buffer
+        $this->link();
+        $link = ob_get_contents();
+        ob_end_clean();
+
+        echo createFormField($this->id, "", $this->value(), "color", array("title" => $this->label, "link" => $link));
+    }
 }
 
 ?>

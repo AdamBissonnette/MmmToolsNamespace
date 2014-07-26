@@ -26,23 +26,19 @@ function createFormField($label, $name, $value, $type, $options=array())
 			$field = createImageUpload($label, $name, $value, $options);
 		break;
 		case 'color':
-			if (isset ($options['class']))
-			{
-				$options['class'] .= " color-picker-field";
-			}
-			else
-			{
-				$options['class'] = "color-picker-field";
-			}
-
-			
-			$field = createInput($label, $value, $type, $options);
+			$field = createColorPicker($label, $value, $options);
 		break;
 	}
 
-	echo '<div class="control-group ' . $label . '-wrap">' .
-					'<label class="control-label" for="' . $label . '">' . $name . '</label>' .
-					'<div class="controls">';
+
+	echo '<div class="control-group ' . $label . '-wrap">';
+
+	if ($name != "")
+	{
+		echo '<label class="control-label" for="' . $label . '">' . $name . '</label>';
+	}
+
+	echo '<div class="controls">';
 
 	if ($useField)
 	{
@@ -90,6 +86,28 @@ function createInput($label, $value, $type="text", $options = null)
 		$output .= sprintf('<p class="help-block">%s</p>', $note);
 	}
 	
+	return $output;
+}
+
+function createColorPicker($label, $value, $options = array())
+{
+	extract( merge_options(
+		array("note" => "", "title" => "", "link" => ""), $options)
+	);
+
+	$template = '<div for="%1$s">
+	    <span class="customize-control-title">%2$s</span>
+
+	    <input type="text" title="Hex Color" class="hex_color" id="%1$s_color" />
+	    
+	    <input type="range" class="alpha_range" title="Alpha / Transparency (1-10)" id="%1$s_alpha" min="1" max="10" value="10" />
+	    <output id="%1$s_output" for="%1$s_alpha" class="alpha_output">10</output>
+
+	    <input type="text" class="mmm_color_picker" id="%1$s" name="%1$s" value="%3$s" %4$s />
+	</div>';
+
+	$output = sprintf($template, $label, $title, $value, $link);
+
 	return $output;
 }
 
