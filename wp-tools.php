@@ -95,15 +95,15 @@ function createColorPicker($label, $value, $options = array())
 		array("note" => "", "title" => "", "link" => ""), $options)
 	);
 
-	$template = '<div for="%1$s">
+	$template = '<div for="%1$s" class="color-picker-container">
 	    <span class="customize-control-title">%2$s</span>
 
 	    <input type="text" title="Hex Color" class="hex_color" id="%1$s_color" />
 	    
-	    <input type="range" class="alpha_range" title="Alpha / Transparency (1-10)" id="%1$s_alpha" min="1" max="10" value="10" />
+	    <input type="range" class="alpha_range" title="Alpha / Transparency (1-10)" id="%1$s_alpha" min="0" max="10" value="10" />
 	    <output id="%1$s_output" for="%1$s_alpha" class="alpha_output">10</output>
 
-	    <input type="text" class="mmm_color_picker" id="%1$s" name="%1$s" value="%3$s" %4$s />
+	    <input type="text" class="mmm_color_picker" id="%1$s" name="%1$s" value="%3$s" %4$s readonly="readonly" />
 	</div>';
 
 	$output = sprintf($template, $label, $title, $value, $link);
