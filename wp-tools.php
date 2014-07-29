@@ -79,7 +79,7 @@ function createInput($label, $value, $type="text", $options = null)
 	);
 	
 	if ($updateRegion == true) {
-		$output .= sprintf('<div class="mmm-update-region"><label class="control-label"><i class="icon-level-up icon-rotate-90"></i> Field Value</label><div class="controls"><div id="%s-update" class="mmm-update-content">%s</div></div></div>', $label, $value);
+		$output .= sprintf('<div class="mmm-update-region"><label class="control-label"><i class="fa fa-level-up fa-rotate-90"></i> Field Value</label><div class="controls"><div id="%s-update" class="mmm-update-content">%s</div></div></div>', $label, $value);
 	}
 
 	if (isset($note)) {
@@ -209,7 +209,7 @@ function createSelect($label, $selectedKey, $options)
 		$output .= '</select>';
 
 		if ($updateRegion == true) {
-			$output .= sprintf('<div class="mmm-update-region"><label class="control-label"><i class="icon-level-up icon-rotate-90"></i> Direct Links</label><div class="controls"><div id="%s-update" class="mmm-update-content">%s</div></div></div>', $label, $links);
+			$output .= sprintf('<div class="mmm-update-region"><label class="control-label"><i class="fa fa-level-up fa-rotate-90"></i> Direct Links</label><div class="controls"><div id="%s-update" class="mmm-update-content">%s</div></div></div>', $label, $links);
 		}
 
 		if ($note != "") {

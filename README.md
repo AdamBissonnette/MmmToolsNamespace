@@ -3,7 +3,19 @@ MmmTools
 
 A set of tools for WordPress themes and plugins.  All html generated is designed to be used with bootstrap.
 
-**Files included currently** July 20, 2014
+**Files included currently** July 29, 2014
+
+- assets/
+
+Contains js, css, and fonts used by this library
+
+- lib/
+
+Contains custom customizer classes (mmm-color-picker, adds a range input for setting color alpha)
+
+- admin-tools.php
+
+Includes a function to register the js, css, and fonts for use within a project
 
 - data-tools.php
 
