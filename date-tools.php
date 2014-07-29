@@ -1,4 +1,6 @@
 <?php /* Date Functions */
+namespace MmmToolsNamespace;
+
 	if (!function_exists('IsWithinRange')) {
 		function IsWithinRange($StartDate, $EndDate, $curdate = null)
 		{

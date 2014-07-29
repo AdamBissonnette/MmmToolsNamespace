@@ -1,4 +1,6 @@
 <?php
+namespace MmmToolsNamespace;
+
 if (!function_exists('WPInsertStatement')) {
 	function WPInsertStatement($table, $array, $format)
 	{

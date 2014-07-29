@@ -1,4 +1,6 @@
 <?php
+namespace MmmToolsNamespace;
+
 function delimitList($data, $format = 'comma')
 {
 	$formattedList = array();

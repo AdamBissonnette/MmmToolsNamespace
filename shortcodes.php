@@ -1,4 +1,5 @@
 <?php
+namespace MmmToolsNamespace;
 
 function getFormattedPostContent($postid, $linktext)
 {

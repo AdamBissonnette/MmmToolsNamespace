@@ -1,4 +1,6 @@
 <?php
+namespace MmmToolsNamespace;
+
 	if (!function_exists('SendMail')) {
 		function SendMail($to, $subject, $from, $message, $replyto = '')
 		{

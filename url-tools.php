@@ -1,4 +1,6 @@
 <?php
+namespace MmmToolsNamespace;
+
 	class Absolute_to_Relative_URL
 	{
 		protected $site_domain;

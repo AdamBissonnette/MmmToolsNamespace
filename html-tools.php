@@ -1,4 +1,6 @@
 <?php
+namespace MmmToolsNamespace;
+
 	function genSelect($inputName, $labelText, $options, $DefaultOptionText, $selectedIndex = 0) //extend for key value options
 	{
 		$selectTemplate = '<div class="control-group"><label class="control-label" for="%s">%s</label><div class="controls"><select id="%s">%s</select></div></div>';

@@ -1,8 +1,9 @@
 <?php
+namespace MmmToolsNamespace;
 
 require_once( ABSPATH . WPINC . '/class-wp-customize-control.php' );
 
-class Mmm_Color_Control extends WP_Customize_Control {
+class Mmm_Color_Control extends \WP_Customize_Control {
     public $type = 'text';
 
     public function render_content() {

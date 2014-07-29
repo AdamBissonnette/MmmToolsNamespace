@@ -1,4 +1,4 @@
-MmmTools
+MmmToolsNamespace
 ========
 
 A set of tools for WordPress themes and plugins.  All html generated is designed to be used with bootstrap.
@@ -48,3 +48,9 @@ Functions to get urls within the WordPress site - borrowed from another project!
 - wp-tools.php
 
 Admin, taxonomy and wordpress customizer control generation code.
+
+
+Usage
+========
+
+In your custom functions file simply import the tools files you would like to use.  When calling functions or classes ensure you use the namespace for that particular function.  Future revisions will include a gruntfile for namespace rewrites.

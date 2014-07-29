@@ -1,4 +1,5 @@
 <?php
+namespace MmmToolsNamespace;
 
 /* WP Customizer */
 
@@ -22,10 +23,10 @@ function mmm_site_customizer( $wp_customize ) {
         }
     }
 
-    add_action( 'customize_controls_enqueue_scripts', 'load_admin_assets' );
+    add_action( 'customize_controls_enqueue_scripts', 'MmmToolsNamespace\load_admin_assets' );
 
     if ($wp_customize->is_preview() && ! is_admin() ) {
-        add_action('wp_footer', 'mmm_customize_preview', 21);
+        add_action('wp_footer', 'MmmToolsNamespace\mmm_customize_preview', 21);
     }
 }
 
@@ -92,7 +93,7 @@ function mmm_customize_css()
     <?php
 }
 
-function add_customizer_section(WP_Customize_Manager $wp_customize, $id, $label, $description, $priority=35)
+function add_customizer_section(\WP_Customize_Manager $wp_customize, $id, $label, $description, $priority=35)
 {
     $wp_customize->add_section(
         $id,
@@ -106,7 +107,7 @@ function add_customizer_section(WP_Customize_Manager $wp_customize, $id, $label,
     return $wp_customize;
 }
 
-function add_section_setting(WP_Customize_Manager $wp_customize, $section_id, $setting_id, $label, $default_value="", $type="text")
+function add_section_setting(\WP_Customize_Manager $wp_customize, $section_id, $setting_id, $label, $default_value="", $type="text")
 {
     switch ($type)
     {
@@ -122,7 +123,7 @@ function add_section_setting(WP_Customize_Manager $wp_customize, $section_id, $s
     }
 }
 
-function add_text_setting(WP_Customize_Manager $wp_customize, $section_id, $setting_id, $label, $default_value="")
+function add_text_setting(\WP_Customize_Manager $wp_customize, $section_id, $setting_id, $label, $default_value="")
 {
     $wp_customize->add_setting(
         $setting_id,
@@ -142,7 +143,7 @@ function add_text_setting(WP_Customize_Manager $wp_customize, $section_id, $sett
     );
 }
 
-function add_color_setting(WP_Customize_Manager $wp_customize, $section_id, $setting_id, $label, $default_value="")
+function add_color_setting(\WP_Customize_Manager $wp_customize, $section_id, $setting_id, $label, $default_value="")
 {
     $wp_customize->add_setting(
         $setting_id,
@@ -169,7 +170,7 @@ function add_color_setting(WP_Customize_Manager $wp_customize, $section_id, $set
     $wp_customize->add_control($control);
 }
 
-function add_image_setting(WP_Customize_Manager $wp_customize, $section_id, $setting_id, $label, $default_value="")
+function add_image_setting(\WP_Customize_Manager $wp_customize, $section_id, $setting_id, $label, $default_value="")
 {
     global $cur_setting_id;
     $cur_setting_id = $setting_id;
@@ -182,7 +183,7 @@ function add_image_setting(WP_Customize_Manager $wp_customize, $section_id, $set
         )
     );
 
-    $control = new WP_Customize_Image_Control(
+    $control = new \WP_Customize_Image_Control(
             $wp_customize,
             $setting_id,
             array(
