@@ -190,7 +190,7 @@ jQuery(document).ready(function($) {
 	}); */
 
 	var options = {
-			change: function(event, ui) {console.log(event.target);}
+			change: function(event, ui) {}
 		};
 
 	$('.hex_color').wpColorPicker(options);

@@ -4,7 +4,7 @@ namespace MmmToolsNamespace {
     require_once('url-tools.php');
 
     function load_admin_assets() {
-        $admin_path = '/wp-content/' . get_admin_folder_path();
+        $admin_path = get_admin_folder_path();
 
         wp_enqueue_style('admin', $admin_path . '/assets/css/mmm_roots_admin.css', false, null);
         wp_enqueue_style('select2', $admin_path . '/assets/css/select2.css', false, null);

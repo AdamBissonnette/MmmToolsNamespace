@@ -199,7 +199,7 @@ function add_image_setting(\WP_Customize_Manager $wp_customize, $section_id, $se
 
 function add_media_library_tab($control)
 {
-    $control->add_tab('library', __('Media Library'), 'media_library_tab');
+    $control->add_tab('library', __('Media Library'), '\MmmToolsNamespace\media_library_tab');
 }
 
 function media_library_tab() {
