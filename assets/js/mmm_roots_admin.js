@@ -214,8 +214,8 @@ jQuery(document).ready(function($) {
 	                hexVal = convert_rgb_to_hex(curVal);
 	                $(color_input).val(hexVal).change();
 	                
-	                alphaVal = curVal[3];
-
+	                alphaVal = $.trim(curVal[3]);
+                    
 	                $(range_output).html(alphaVal);
 	                $(range_input).val(alphaVal);
 	            }
