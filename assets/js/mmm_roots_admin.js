@@ -63,7 +63,7 @@ function SetupSaveEvents()
 
 function BindTextUpdateOnSubmit()
 {
-	var selects = jQuery('.mmm-select-multi');
+	var selects = jQuery('select.mmm-select-multi');
 
 	jQuery.each(selects, function() {
 		var curSelect = jQuery(this);
