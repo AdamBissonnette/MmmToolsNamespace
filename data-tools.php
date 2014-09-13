@@ -178,9 +178,13 @@ function GetThemeDataFields($tabs)
 	return $fields;
 }
 
-function MMRootsField($id, $label, $type, $options=null, $values=null)
+function MMRootsField($id, $label, $type, $options=null, $values=null, $data = null)
 {
-	global $MMM_Roots;
+	if ($data == null)
+	{
+		global $MMM_Roots;
+		$data = $MMM_Roots;
+	}
 	
 	$formField = "";
 
@@ -191,7 +195,7 @@ function MMRootsField($id, $label, $type, $options=null, $values=null)
 	}
 	else
 	{
-		$formField = createFormField($id, $label, $MMM_Roots->get_setting($id), $type, $options);
+		$formField = createFormField($id, $label, $data->get_setting($id), $type, $options);
 	}
 
 	//return $formField;
