@@ -63,7 +63,7 @@ function SetupSaveEvents()
 
 function BindTextUpdateOnSubmit()
 {
-	var selects = jQuery('.mmm-select-multi');
+	var selects = jQuery('select.mmm-select-multi');
 
 	jQuery.each(selects, function() {
 		var curSelect = jQuery(this);
@@ -190,7 +190,7 @@ jQuery(document).ready(function($) {
 	}); */
 
 	var options = {
-			change: function(event, ui) {console.log(event.target);}
+			change: function(event, ui) {}
 		};
 
 	$('.hex_color').wpColorPicker(options);
@@ -214,8 +214,8 @@ jQuery(document).ready(function($) {
 	                hexVal = convert_rgb_to_hex(curVal);
 	                $(color_input).val(hexVal).change();
 	                
-	                alphaVal = curVal[3];
-
+	                alphaVal = $.trim(curVal[3]);
+                    
 	                $(range_output).html(alphaVal);
 	                $(range_input).val(alphaVal);
 	            }

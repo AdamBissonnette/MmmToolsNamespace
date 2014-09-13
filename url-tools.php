@@ -116,9 +116,12 @@ namespace MmmToolsNamespace;
 
 		// Second step: if the path contains the root path, lets remove it
 		if (stristr($current_file, 'public_html'))
-		    { $current_file=preg_replace('/(.*)public_html\//i','',$current_file); }
+		    { $current_file='/'. preg_replace('/(.*)public_html\//i','','/'. $current_file); }
 		elseif (stristr($current_file, 'wp-content'))
-			{ $current_file=preg_replace('/(.*)wp-content\//i','',$current_file); }
+			{ $current_file='/wp-content/'. preg_replace('/(.*)wp-content\//i','',$current_file); }
+
+		//echo dirname($current_file);
+		//exit(1);
 
 		return dirname($current_file);
 	}

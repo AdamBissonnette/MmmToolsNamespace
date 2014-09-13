@@ -58,7 +58,7 @@ if (!function_exists('arr_to_associative')) {
 }
 
 //Theme Data Functions
-function OutputThemeData($tabs, $values=null)
+function OutputThemeData($tabs, $values=null, $data=null)
 {
 	$isFirst = true;
 
@@ -91,7 +91,7 @@ function OutputThemeData($tabs, $values=null)
 	
 	foreach ($tabs as $tab)
 	{
-		echo OutputTabContent($tab["id"], $tab["sections"], $isFirst, $values);
+		echo OutputTabContent($tab["id"], $tab["sections"], $isFirst, $values, $data);
 		
 		if ($isFirst)
 		{
@@ -118,7 +118,7 @@ function OutputTabNav($id, $name, $icon, $isFirst)
 	 echo sprintf($tabTemplate, $class, $id, $icon, $name);
 }
 
-function OutputTabContent($id, $sections, $isFirst, $values)
+function OutputTabContent($id, $sections, $isFirst, $values, $data=null)
 {
 	$tabContentTemplate = '<div class="tab-pane%s" id="%s">';
 
@@ -135,7 +135,7 @@ function OutputTabContent($id, $sections, $isFirst, $values)
 	{
 		foreach ($sections as $section)
 		{
-			OutputSection($section["name"], $section["size"], $section["fields"], $values);
+			OutputSection($section["name"], $section["size"], $section["fields"], $values, $data);
 		}
 	}
 	else
@@ -148,7 +148,7 @@ function OutputTabContent($id, $sections, $isFirst, $values)
 	//return $output;
 }
 
-function OutputSection($name, $size, $fields, $values)
+function OutputSection($name, $size, $fields, $values, $data=null)
 {
 	$sectionTemplate = '<div class="col-sm-%s meta-section"><legend>%s</legend>';
 	echo sprintf($sectionTemplate, $size, $name);
@@ -156,7 +156,7 @@ function OutputSection($name, $size, $fields, $values)
 	foreach ($fields as $field)
 	{
 		$options = isset($field["options"])?$field["options"]:array();
-		MMRootsField($field["id"], $field["label"], $field["type"], $options, $values);
+		MMRootsField($field["id"], $field["label"], $field["type"], $options, $values, $data);
 	}
 	
 	echo "</div>";
@@ -178,9 +178,13 @@ function GetThemeDataFields($tabs)
 	return $fields;
 }
 
-function MMRootsField($id, $label, $type, $options=null, $values=null)
+function MMRootsField($id, $label, $type, $options=null, $values=null, $data = null)
 {
-	global $MMM_Roots;
+	if ($data == null)
+	{
+		global $MMM_Roots;
+		$data = $MMM_Roots;
+	}
 	
 	$formField = "";
 
@@ -191,7 +195,7 @@ function MMRootsField($id, $label, $type, $options=null, $values=null)
 	}
 	else
 	{
-		$formField = createFormField($id, $label, $MMM_Roots->get_setting($id), $type, $options);
+		$formField = createFormField($id, $label, $data->get_setting($id), $type, $options);
 	}
 
 	//return $formField;
