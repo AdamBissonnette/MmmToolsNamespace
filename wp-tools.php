@@ -70,15 +70,26 @@ namespace MmmToolsNamespace
 	function createInput($label, $value, $type="text", $options = null)
 	{
 		extract( merge_options(
-			array("class" => "", "placeholder" => "", "note" => "", "updateRegion" => false), $options)
+			array("class" => "", "placeholder" => "", "note" => "", "updateRegion" => false, "disabled" => false, "default_value" => ""), $options)
 		);
 
-		$output = sprintf('<input type="%s" id="%s" class="%s" name="%s" value="%s" placeholder="%s" />', $type,
+		$name = $label;
+		$disabledParam = "";
+
+		if ($disabled)
+		{
+			$disabledParam = ' disabled="disabled"';
+			$value = $default_value;
+			$name = "";
+		}
+
+		$output = sprintf('<input type="%s" id="%s" class="%s" name="%s" value="%s" placeholder="%s"%s />', $type,
 			 $label, //id
 			 $class,
-			 $label, //name
+			 $name, //name
 			 stripslashes($value), //value
-			 $placeholder
+			 $placeholder,
+			 $disabledParam
 		);
 		
 		if ($updateRegion == true) {
