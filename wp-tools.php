@@ -83,7 +83,13 @@ namespace MmmToolsNamespace
 	function createInput($label, $value, $type="text", $options = null)
 	{
 		extract( merge_options(
-			array("class" => "", "placeholder" => "", "note" => "", "updateRegion" => false, "disabled" => false, "default_value" => ""), $options)
+			array("class" => "",
+				"placeholder" => "",
+				"note" => "",
+				"updateRegion" => false,
+				"disabled" => false,
+				"default_value" => ""),
+			$options)
 		);
 
 		$name = $label;
