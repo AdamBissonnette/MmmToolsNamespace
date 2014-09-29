@@ -257,9 +257,9 @@ function getPostThumbnailUrl($post)
 	return $imageUrl;
 }
 
-function getStringValueFromArray($array, $key)
+function getKeyValueFromArray($array, $key, $default)
 {
-	$output = "";
+	$output = $default;
 
 	if (isset($array))
 	{
@@ -269,6 +269,11 @@ function getStringValueFromArray($array, $key)
 		}
 	}
 
-	return $output;
+	return $output;	
+}
+
+function getStringValueFromArray($array, $key)
+{
+	return getKeyValueFromArray($array, $key, "");
 }
 ?>
