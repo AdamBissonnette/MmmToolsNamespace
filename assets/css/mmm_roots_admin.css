@@ -187,9 +187,6 @@ border:1px solid #ccc;border-bottom-color:#bbb; border-radius:15px;-webkit-box-s
 .select2-container-multi .select2-choices .select2-search-choice {margin: 10px;}
 
 .mmm-upload {cursor: pointer;}
-
-#menu-posts-page-section .wp-menu-image {padding-top: 6px; height: 15px !important;}
-#menu-posts-page-section .wp-menu-image:after {font-family: FontAwesome; font-size: 1.2em; margin-left:5px; color: grey; content: "";}
 .mmm-update-region {margin: 15px 0 0 20px;}
 .mmm-update-region label {width: 180px;}
 .mmm-update-content {margin: 0 20px 0 190px; border: 1px solid #aaa; border-radius: 4px; padding: 5px; background: #fff; width: 500px;}

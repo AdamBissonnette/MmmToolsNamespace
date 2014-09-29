@@ -7,6 +7,7 @@ namespace MmmToolsNamespace;
 		$output = '';
 		$field = '';
 		$useField = true;
+		$isHtml = false;
 
 		switch ($type)
 		{
@@ -21,6 +22,10 @@ namespace MmmToolsNamespace;
 			break;
 			case 'editor':
 				$useField = false;
+			break;
+			case 'html':
+				$useField = false;
+				$isHtml = true;
 			break;
 			case 'checkbox':
 				$field = createCheckbox($label, $value, $options);
@@ -47,6 +52,14 @@ namespace MmmToolsNamespace;
 		{
 			echo $field;
 		}
+		elseif ($isHtml)
+		{
+			extract( merge_options(
+				array("data" => ""), $options)
+			);
+
+			echo $data;
+		}
 		else
 		{
 			wp_editor( $value, $label, $settings = array() );
@@ -70,7 +83,13 @@ namespace MmmToolsNamespace;
 	function createInput($label, $value, $type="text", $options = null)
 	{
 		extract( merge_options(
-			array("class" => "", "placeholder" => "", "note" => "", "updateRegion" => false, "disabled" => false, "default_value" => ""), $options)
+			array("class" => "",
+				"placeholder" => "",
+				"note" => "",
+				"updateRegion" => false,
+				"disabled" => false,
+				"default_value" => ""),
+			$options)
 		);
 
 		$name = $label;
