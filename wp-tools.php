@@ -7,6 +7,7 @@ namespace MmmToolsNamespace
 		$output = '';
 		$field = '';
 		$useField = true;
+		$isHtml = false;
 
 		switch ($type)
 		{
@@ -21,6 +22,10 @@ namespace MmmToolsNamespace
 			break;
 			case 'editor':
 				$useField = false;
+			break;
+			case 'html':
+				$useField = false;
+				$isHtml = true;
 			break;
 			case 'checkbox':
 				$field = createCheckbox($label, $value, $options);
@@ -46,6 +51,14 @@ namespace MmmToolsNamespace
 		if ($useField)
 		{
 			echo $field;
+		}
+		elseif ($isHtml)
+		{
+			extract( merge_options(
+				array("data" => ""), $options)
+			);
+
+			echo $data;
 		}
 		else
 		{
