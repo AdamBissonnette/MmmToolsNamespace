@@ -57,6 +57,11 @@ if (!function_exists('arr_to_associative')) {
 	}
 }
 
+function OutputMetaData($tabs, $values=null, $date=null)
+{
+	OutputThemeData($tabs, $values, $date);
+}
+
 //Theme Data Functions
 function OutputThemeData($tabs, $values=null, $data=null)
 {
@@ -162,6 +167,11 @@ function OutputSection($name, $size, $fields, $values, $data=null)
 	echo "</div>";
 }
 
+function GetMetaDataFields($tabs)
+{
+	return GetThemeDataFields($tabs);
+}
+
 function GetThemeDataFields($tabs)
 {
 	$fields = array();
@@ -176,6 +186,11 @@ function GetThemeDataFields($tabs)
 	}
 
 	return $fields;
+}
+
+function MetaField($id, $label, $type, $options=null, $values=null, $data=null)
+{
+	MMRootsField($id, $label, $type, $options, $values, $data);
 }
 
 function MMRootsField($id, $label, $type, $options=null, $values=null, $data = null)
@@ -272,6 +287,11 @@ function getKeyValueFromArray($array, $key, $default)
 	}
 
 	return $output;	
+}
+
+function getIntegerValueFromArray($array, $key)
+{
+	return getKeyValueFromArray($array, $key, -1);
 }
 
 function getStringValueFromArray($array, $key)

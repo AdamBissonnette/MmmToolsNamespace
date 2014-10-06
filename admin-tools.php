@@ -15,6 +15,9 @@ namespace MmmToolsNamespace {
         wp_enqueue_script('select2', $admin_path . '/assets/js/select2.js', false, null);
         wp_enqueue_script('select2-sortable', $admin_path . '/assets/js/select2.sortable.js', false, null);
         wp_enqueue_script('admin', $admin_path . '/assets/js/mmm_roots_admin.js', false, null);
+    }
 
+    function load_font_awesome() {
+        wp_enqueue_style('font-awesome', $admin_path . '/assets/css/font-awesome.css', false, null);
     }
 }
