@@ -18,6 +18,8 @@ namespace MmmToolsNamespace {
     }
 
     function load_font_awesome() {
+        $admin_path = get_admin_folder_path();
+
         wp_enqueue_style('font-awesome', $admin_path . '/assets/css/font-awesome.css', false, null);
     }
 }

@@ -38,34 +38,34 @@ namespace MmmToolsNamespace
 			break;
 		}
 
+		$formFieldTemplate = '<div class="control-group %s-wrap">%s<div class="controls">%s</div></div>';
 
-		echo '<div class="control-group ' . $label . '-wrap">';
+		$formFieldLabel = "";
 
 		if ($name != "")
 		{
-			echo '<label class="control-label" for="' . $label . '">' . $name . '</label>';
+			$formFieldLabel = sprintf('<label class="control-label" for="%s">%s</label>', $label, $name);
 		}
 
-		echo '<div class="controls">';
-
-		if ($useField)
-		{
-			echo $field;
-		}
-		elseif ($isHtml)
+		if ($isHtml)
 		{
 			extract( merge_options(
 				array("data" => ""), $options)
 			);
 
-			echo $data;
+			$field = $data;
 		}
-		else
+		else if (!$useField)
 		{
+			ob_start(); //Since there isn't a nice way to get this content we have to use the output buffer
 			wp_editor( $value, $label, $settings = array() );
+			$field = ob_get_contents();
+			ob_end_clean();
 		}
 
-		echo '</div></div>';
+		$output = sprintf($formFieldTemplate, $label, $formFieldLabel, $field);
+
+		return $output;
 	}
 
 	function merge_options($pairs, $atts) {
