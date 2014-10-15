@@ -42,11 +42,6 @@ namespace MmmToolsNamespace
 
 		$formFieldLabel = "";
 
-		if ($name != "")
-		{
-			$formFieldLabel = sprintf('<label class="control-label" for="%s">%s</label>', $label, $name);
-		}
-
 		if ($isHtml)
 		{
 			extract( merge_options(
@@ -61,6 +56,13 @@ namespace MmmToolsNamespace
 			wp_editor( $value, $label, $settings = array() );
 			$field = ob_get_contents();
 			ob_end_clean();
+		}
+		else
+		{
+			if ($name != "")
+			{
+				$formFieldLabel = sprintf('<label class="control-label" for="%s">%s</label>', $label, $name);
+			}
 		}
 
 		$output = sprintf($formFieldTemplate, $label, $formFieldLabel, $field);
