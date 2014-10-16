@@ -17,7 +17,12 @@ function mmm_site_customizer( $wp_customize ) {
 
             foreach ($section["settings"] as $setting)
             {
-                add_section_setting($wp_customize, $section["id"], $setting["id"], $setting["name"], $setting["default"], $setting["type"]);
+                add_section_setting($wp_customize,
+                                     $section["id"],
+                                     $setting["id"], 
+                                     $setting["name"], 
+                                     $setting["default"], 
+                                     $setting["type"]);
             }
             
         }

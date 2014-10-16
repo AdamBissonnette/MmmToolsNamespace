@@ -57,51 +57,46 @@ if (!function_exists('arr_to_associative')) {
 	}
 }
 
+function OutputMetaData($tabs, $values=null, $data=null)
+{
+	OutputThemeData($tabs, $values, $data);
+}
+
 //Theme Data Functions
 function OutputThemeData($tabs, $values=null, $data=null)
 {
 	$isFirst = true;
 
-	echo '<div class="col-sm-12 tabbable">';
+	$output = "";
+	$wrapperTemplate = '<div class="col-sm-12 tabbable">%s</div>';
+	$tabHeadingTemplate = '<ul class="nav nav-tabs">%s</ul>';
+	$tabContentTemplate = '<div class="row tab-content">%s</div>';
 
+	$tabHeadings = "";
+	$tabContent = "";
 
-	if (count($tabs) > 1)
-	{
+	$tabCount = count($tabs);
 
-		echo '<ul class="nav nav-tabs">';
-		
-		foreach ($tabs as $tab)
-		{			
-			OutputTabNav($tab["id"], $tab["name"], $tab["icon"], $isFirst);
-			
-			if ($isFirst)
-			{
-				$isFirst = false;
-			}
-		}
-
-		
-		echo '</ul>'; //Done with nav
-	
-	}
-
-	echo '<div class="row tab-content">';
-	
-	$isFirst = true;
-	
 	foreach ($tabs as $tab)
 	{
-		echo OutputTabContent($tab["id"], $tab["sections"], $isFirst, $values, $data);
+		if ($tabCount > 1)
+		{
+			$tabHeadings .= OutputTabNav($tab["id"], $tab["name"], $tab["icon"], $isFirst);			
+		}
+
+		$tabContent .= OutputTabContent($tab["id"], $tab["sections"], $isFirst, $values, $data);
 		
 		if ($isFirst)
 		{
 			$isFirst = false;
 		}
 	}
-	
-	echo '</div>'; //Done with tab content
-	
-	//return $output;
+
+	$output = sprintf($wrapperTemplate,
+					sprintf($tabHeadingTemplate, $tabHeadings) .
+					sprintf($tabContentTemplate, $tabContent));
+
+	return $output;
 }
 
 function OutputTabNav($id, $name, $icon, $isFirst)
@@ -115,51 +110,58 @@ function OutputTabNav($id, $name, $icon, $isFirst)
 	 	$class = ' class="active"';
 	 }
 	 
-	 echo sprintf($tabTemplate, $class, $id, $icon, $name);
+	 return sprintf($tabTemplate, $class, $id, $icon, $name);
 }
 
 function OutputTabContent($id, $sections, $isFirst, $values, $data=null)
 {
-	$tabContentTemplate = '<div class="tab-pane%s" id="%s">';
-
 	$class = "";
-	 
+
 	if ($isFirst)
 	{
 	 	$class = ' active';
 	}
 
-	echo sprintf($tabContentTemplate, $class, $id);
+	$tabContentTemplate = sprintf('<div class="tab-pane%s" id="%s">', $class, $id) . "%s</div>";
+
+	$tabContent = "";
 	
 	if ($sections != null)
 	{
 		foreach ($sections as $section)
 		{
-			OutputSection($section["name"], $section["size"], $section["fields"], $values, $data);
+			$tabContent .= OutputSection($section["name"], $section["size"], $section["fields"], $values, $data);
 		}
 	}
 	else
 	{
-		echo "Missing section content for " . $class . " - " . $id;
+		$tabContent .=  "Missing section content for " . $class . " - " . $id;
 	}
+	
+	$output = sprintf($tabContentTemplate, $tabContent);
 
-	echo "</div>";
-		
-	//return $output;
+	return $output;
 }
 
 function OutputSection($name, $size, $fields, $values, $data=null)
 {
-	$sectionTemplate = '<div class="col-sm-%s meta-section"><legend>%s</legend>';
-	echo sprintf($sectionTemplate, $size, $name);
+	$sectionTemplate = sprintf('<div class="col-sm-%s meta-section"><legend>%s</legend>', $size, $name) . "%s</div>";
+	$sectionContent = "";
 
 	foreach ($fields as $field)
 	{
 		$options = isset($field["options"])?$field["options"]:array();
-		MMRootsField($field["id"], $field["label"], $field["type"], $options, $values, $data);
+		$sectionContent .= MMRootsField($field["id"], $field["label"], $field["type"], $options, $values, $data);
 	}
 	
-	echo "</div>";
+	$output = sprintf($sectionTemplate, $sectionContent);
+
+	return $output;
+}
+
+function GetMetaDataFields($tabs)
+{
+	return GetThemeDataFields($tabs);
 }
 
 function GetThemeDataFields($tabs)
@@ -178,6 +180,11 @@ function GetThemeDataFields($tabs)
 	return $fields;
 }
 
+function MetaField($id, $label, $type, $options=null, $values=null, $data=null)
+{
+	return MMRootsField($id, $label, $type, $options, $values, $data);
+}
+
 function MMRootsField($id, $label, $type, $options=null, $values=null, $data = null)
 {
 	if ($data == null)
@@ -186,19 +193,19 @@ function MMRootsField($id, $label, $type, $options=null, $values=null, $data = n
 		$data = $MMM_Roots;
 	}
 	
-	$formField = "";
+	$output = "";
 
 	if (isset($values))
 	{
 		$value = isset($values[$id])?stripslashes($values[$id]):"";
-		$formField = createFormField($id, $label, $value, $type, $options);
+		$output = createFormField($id, $label, $value, $type, $options);
 	}
 	else
 	{
-		$formField = createFormField($id, $label, $data->get_setting($id), $type, $options);
+		$output = createFormField($id, $label, $data->get_setting($id), $type, $options);
 	}
 
-	//return $formField;
+	return $output;
 }
 
 
@@ -227,20 +234,23 @@ function MergeChildTaxonomies($parentTaxonomies, $childTaxonomies)
 
 function OutputPostProperties($post, $content = "")
 {
-	global $MMM_Roots;
-	global $MMM_Child_Roots;
-
-	$variables = $MMM_Roots->get_post_variables($post);
-
-	if (isset($MMM_Child_Roots))
-	{
-		$variables = array_merge($MMM_Child_Roots->get_post_variables($post), $variables);
-	}
+	global $MMM_Data_Library;
 
 	$output = $content;
 
-	foreach ($variables as $key => $value) {
-		$output = str_replace($key, $value, $output);
+	if ($MMM_Data_Library != null)
+	{
+		try {
+			foreach ($MMM_Data_Library as $Library) {
+				$variables = $Library->get_post_variables($post);
+
+				foreach ($variables as $key => $value) {
+					$output = str_replace($key, $value, $output);
+				}
+			}
+		} catch (Exception $e) {
+			
+		}
 	}
 
 	return $output;
@@ -272,6 +282,11 @@ function getKeyValueFromArray($array, $key, $default)
 	}
 
 	return $output;	
+}
+
+function getIntegerValueFromArray($array, $key)
+{
+	return getKeyValueFromArray($array, $key, -1);
 }
 
 function getStringValueFromArray($array, $key)

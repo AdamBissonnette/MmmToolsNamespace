@@ -1,31 +1,6 @@
 <?php
 namespace MmmToolsNamespace;
 
-function getFormattedPostContent($postid, $linktext)
-{
-	global $MMM_Roots;
-	//Load content "blurb" from a given post or page
-     $output = '';
-     $postFormat = '<p class="post-content">%s</p><a class="btn btn-small btn-primary" href="%s"><i class="icon-search"></i>%s</a>';
-     $postContent = '';
-     
-     if ($postid != '')
-     {
-    	if (has_excerpt($postid))
-    	{
-    		$postContent = get_post($postid)->post_excerpt;
-    	}
-    	else
-    	{
-     		$postContent = $MMM_Roots->get_post_meta($postid, "blurb", true);
-     	}
-     	
-        $output = sprintf($postFormat, $postContent, get_permalink($postid), $linktext);
-     }
-     
-     return $output;
-}
-
 function grid($atts, $content="")
 {
 	$rowRegex = "/(?:\[(?:\/)?row(?:(?:.+?=.+?)*)?\])/";
@@ -83,7 +58,7 @@ function grid($atts, $content="")
 
 	return $content;
 }
-add_shortcode( 'grid', 'grid' );
+//add_shortcode( 'grid', 'grid' );
 
 function parseAtts($rawAtts)
 {
@@ -119,7 +94,7 @@ function row($atts, $content="")
 	
 	return $output;
 }
-add_shortcode( 'row', 'row' );
+//add_shortcode( 'row', 'row' );
 
 function column($atts, $content="")
 {
@@ -140,7 +115,7 @@ function column($atts, $content="")
 	
 	return $output;
 }
-add_shortcode( 'column', 'column' );
+//add_shortcode( 'column', 'column' );
 
 function video($atts, $content="")
 {
@@ -163,7 +138,7 @@ function video($atts, $content="")
 	return $output;
 }
 
-add_shortcode( 'video', 'video' );
+//add_shortcode( 'video', 'video' );
 
 function PricingBox($atts, $content = null)
 {
@@ -251,7 +226,7 @@ function ButtonLink($atts)
     return $output;
 }
 
-add_shortcode("ButtonLink", "ButtonLink");
+//add_shortcode("ButtonLink", "ButtonLink");
 
 function IconBlock($atts, $content='')
 {
@@ -384,7 +359,7 @@ function ListTaxonomy($atts, $content=null)
 	return do_shortcode($output);
 }
 
-add_shortcode("ListTaxonomy", "ListTaxonomy");
+//add_shortcode("ListTaxonomy", "ListTaxonomy");
 
 //Rename to ListTaxonomyTerms
 function ListTaxTerms($atts, $content = null)
@@ -438,7 +413,7 @@ function ListTaxTerms($atts, $content = null)
 	return $output;
 }
 
-add_shortcode( 'ListTaxTerms', 'ListTaxTerms' );
+//add_shortcode( 'ListTaxTerms', 'ListTaxTerms' );
 
 function Sidebar($atts)
 {
@@ -460,9 +435,9 @@ function Sidebar($atts)
 	return $content;
 }
 
-add_shortcode("Sidebar", "Sidebar");
+//add_shortcode("Sidebar", "Sidebar");
 
 //Enable Shortcodes in widgets
-add_filter('widget_text', 'do_shortcode');
+//add_filter('widget_text', 'do_shortcode');
 
 ?>
