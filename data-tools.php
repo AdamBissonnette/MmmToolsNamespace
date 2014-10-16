@@ -234,20 +234,23 @@ function MergeChildTaxonomies($parentTaxonomies, $childTaxonomies)
 
 function OutputPostProperties($post, $content = "")
 {
-	global $MMM_Roots;
-	global $MMM_Child_Roots;
-
-	$variables = $MMM_Roots->get_post_variables($post);
-
-	if (isset($MMM_Child_Roots))
-	{
-		$variables = array_merge($MMM_Child_Roots->get_post_variables($post), $variables);
-	}
+	global $MMM_Data_Library;
 
 	$output = $content;
 
-	foreach ($variables as $key => $value) {
-		$output = str_replace($key, $value, $output);
+	if ($MMM_Data_Library != null)
+	{
+		try {
+			foreach ($MMM_Data_Library as $Library) {
+				$variables = $Library->get_post_variables($post);
+
+				foreach ($variables as $key => $value) {
+					$output = str_replace($key, $value, $output);
+				}
+			}
+		} catch (Exception $e) {
+			
+		}
 	}
 
 	return $output;
