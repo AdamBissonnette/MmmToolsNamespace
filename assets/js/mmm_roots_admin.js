@@ -189,6 +189,16 @@ jQuery(document).ready(function($) {
 		$('#' + data.target.id + '-update').html(data.target.value);
 	}); */
 
+    $('.date').datepicker({
+        dateFormat: 'yy-mm-dd',
+        separator: ' '
+    });
+
+    $('.datetime').datetimepicker({
+        dateFormat: 'yy-mm-dd',
+        separator: ' '
+    });
+
 	var options = {
 			change: function(event, ui) {}
 		};

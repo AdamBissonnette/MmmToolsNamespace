@@ -101,7 +101,7 @@ function OutputThemeData($tabs, $values=null, $data=null)
 
 function OutputTabNav($id, $name, $icon, $isFirst)
 {
-	 $tabTemplate = '<li%s><a href="#%s" data-toggle="tab"><i class="icon-%s"></i> %s</a></li>';
+	 $tabTemplate = '<li%s><a href="#%s" data-toggle="tab"><i class="fa %s"></i> %s</a></li>';
 	 
 	 $class = "";
 	 
