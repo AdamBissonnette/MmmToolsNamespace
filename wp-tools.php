@@ -121,7 +121,7 @@ namespace MmmToolsNamespace;
 			 stripslashes($value) //value
 		);
 
-		if (isset($note)) {
+		if ($note != "") {
 			$output .= sprintf('<p class="help-block">%s</p>', $note);
 		}
 		
