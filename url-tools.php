@@ -59,7 +59,7 @@ namespace MmmToolsNamespace;
 		}
 		
 		
-		public function relateRUL($url)
+		public function relateURL($url)
 		{
 			// Avoid unmatched protocols and already-relative URLs
 			if (!isset($_SERVER['HTTPS']))
@@ -111,6 +111,7 @@ namespace MmmToolsNamespace;
 
 	function get_admin_folder_path()
 	{
+		//WP_PLUGIN_URL . '/'. str_replace( basename( __FILE__ ), "", plugin_basename(__FILE__) );
 		// First step: Current filepaths
 		$current_file = str_replace('\\','/',__FILE__);
 
@@ -123,6 +124,6 @@ namespace MmmToolsNamespace;
 		//echo dirname($current_file);
 		//exit(1);
 
-		return dirname($current_file);
+		return WP_PLUGIN_URL . '/'. str_replace( basename( __FILE__ ), "", plugin_basename(__FILE__) );//dirname($current_file);
 	}
 ?>
